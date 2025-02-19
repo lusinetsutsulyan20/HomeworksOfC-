@@ -19,7 +19,7 @@ namespace TicketBooking
         }
         public void Booked(){
             if (!isBooked){
-                Console.WriteLine($"{seatNumber}This seat is availaple");
+                Console.WriteLine($"{seatNumber}This seat is available");
             }
         }
     }
