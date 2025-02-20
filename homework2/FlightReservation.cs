@@ -5,7 +5,7 @@ namespace FlightReservation
         public int flightNumber;
         public int seatNumber;
         
-        public FlightTicket(string name; int fNumber; int sNumber){
+        public FlightTicket(string name, int fNumber, int sNumber){
             passengerName = name;
             flightNumber = fNumber;
             seatNumber = sNumber;
