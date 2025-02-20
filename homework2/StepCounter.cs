@@ -12,7 +12,7 @@ namespace StepCounter
             stepCount += steps;
         }
         public void ShowSteps(){
-            Console.WriteLine($"The {name}'s steps count is {stepCount}");
+            Console.WriteLine($"The {ownerName}'s steps count is {stepCount}");
         }
     }
 
