@@ -11,7 +11,7 @@ namespace CourseEnrollment
             this.maxStudents = maxStudents;
         }
         public void ShowCourseDetails(){
-            Console.WriteLine($"The course name is {name}: the insructor is {instructor}: the students' max count is {maxStudents}");
+            Console.WriteLine($"The course name is {courseName}: the insructor is {instructor}: the students' max count is {maxStudents}");
         }
     }
 
