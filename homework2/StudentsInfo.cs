@@ -18,7 +18,7 @@ namespace StudentManagment
 
    internal class BookLibrary{
         static void Main(string[] args){
-            Student[] studs = Student[2];
+            Student[] studs = new Student[2];
 
             for (int i = 0; i < studs.Length; i++){
                 string name = Console.ReadLine() ?? "";
