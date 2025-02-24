@@ -17,7 +17,7 @@ public class MaxNumber{
             arr[i] = int.Parse(Console.ReadLine() ?? "");
         }
         int max = 5;
-        Program.MaxOfArray(ref max, arr);
+        MaxNumber.MaxOfArray(ref max, arr);
         Console.WriteLine(max);
    }
 }
