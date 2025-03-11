@@ -3,12 +3,21 @@ class Program {
     public class Person {
         public string firstName {get; set;}
         public string lastName {get; set;}
-        public string FullName {get;}
         
+        private string _fullName;
+        public string FullName {
+            get{
+                if (_fullName == null){
+                    Console.WriteLine ("We have not FullName");
+                }
+                return _fullName;
+            }
+        }
+    
         public Person (string firstname, string lastname){
             firstName = firstname;
             lastName = lastname;
-            FullName = firstName + " " + lastName;
+            _fullName = firstName + " " + lastName;
         }
         
     }
