@@ -17,17 +17,15 @@ class Program {
         public Person (string firstname, string lastname){
             firstName = firstname;
             lastName = lastname;
-            _fullName = firstName + " " + lastName;
+            _fullName = $"{firstName} {lastName}";
         }
         
     }
     static void Main() {
         Person P = new Person("anun", "azganun");
-        
         Console.WriteLine(P.FullName);
+        
         P.firstName = "changed";
-        
         Console.WriteLine(P.FullName);
-        
     }
 }
