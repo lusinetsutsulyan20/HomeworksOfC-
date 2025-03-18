@@ -1,30 +1,33 @@
 using System;
 public class Program {
-    public class Parenth {
+    public class Parent {
         public string name {get; private set;}
         public int age {get; private set;}
         public double salary {get; private set;}
         
-        public Parenth (string name, int age, double salary){
+        public Parent (string name, int age, double salary){
             this.name = name;
             this.age = age;
             this.salary = salary;
         }
-        public double GetSalary (){
+        public double GetSalary(){
             return salary;
         }
     }
     public class Child {
         public string name {get; private set;}
         public int age {get; private set;}
-        public Parenth father;
-        public Parenth mother;
+        public Parent father;
+        public Parent mother;
         
         public Child (string name, int age, string fatherName, int fatherAge, double fatherSalary, string motherName, int motherAge, double motherSalary){
             this.name = name;
             this.age = age;
-            father = new Parenth (fatherName, fatherAge, fatherSalary);
-            mother = new Parenth (motherName, motherAge, motherSalary);
+            father = new Parent (fatherName, fatherAge, fatherSalary);
+            mother = new Parent (motherName, motherAge, motherSalary);
+        }
+        public double GetIncome (){
+            return (mother.salary + father.salary);
         }
         public string ShowInfo(){
         return $"Name: {name}, Age: {age}, Mother's Name: {mother.name}, Father's Name: {father.name}";        }
@@ -65,7 +68,7 @@ public class Program {
         int youngestChildAge = childs[0].age;
         int youngestChildIndex = 0;
         
-        double richedChildIncome = childs[0].father.GetSalary() + childs[0].mother.GetSalary();   
+        double richedChildIncome = childs[0].GetIncome();   
         int richedChildIndex = 0;
         
         for (int i = 1; i < childs.Length; i++){
@@ -77,14 +80,14 @@ public class Program {
                 youngestChildAge = childs[i].age;
                 youngestChildIndex = i;
             }
-            if ((childs[i].father.GetSalary() + childs[i].mother.GetSalary()) > richedChildIncome){
-                richedChildIncome = childs[i].father.GetSalary() + childs[i].mother.GetSalary();
+            if (childs[i].GetIncome() > richedChildIncome){
+                richedChildIncome = childs[i].GetIncome();
                 richedChildIndex = i;
             }
         }
         Console.WriteLine ("The eldest child's father's salary is: " + childs[eldestChildIndex].father.GetSalary());
         Console.WriteLine();
-        Console.WriteLine ("The richest child's parents' income is: " + (childs[richedChildIndex].father.GetSalary() + childs[richedChildIndex].mother.GetSalary()));
+        Console.WriteLine ("The richest child's parents' income is: " + childs[richedChildIndex].GetIncome());
         Console.WriteLine();
         
         Child tmp = childs[eldestChildIndex];
