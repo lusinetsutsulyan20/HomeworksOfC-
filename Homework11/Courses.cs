@@ -25,8 +25,29 @@ public class Program
     }
     public class Course 
     {
-        protected string name {get; set;}
-        protected double payment {get; set;}
+        protected string name;
+        public string Name 
+        {
+            get
+            {
+                return name;
+            }
+            set{
+                name = value;
+            }
+        }
+        protected double payment;
+        public double Payment
+        {
+            get
+            {
+                return payment;
+            }
+            set
+            {
+                payment = value;
+            }
+        }
         protected Module[] moduls;
 
         public Course (string name, double payment, Module[] moduls)
@@ -35,27 +56,31 @@ public class Program
             this.payment = payment;
             this.moduls = moduls;
         }
-        public Course (string name, double payment, int size){
-            this.name = name;
-            this.payment = payment;
-            moduls = new Module[size];
+        public string Info(){
+            return "sdf";
         }
     }
     public class Group 
     {
         private string name {get; set;}
-        private int count {get; set;}
-        private Course course;
+        private int count;
+        public int Count
+        {
+            get
+            {
+                return count;
+            }
+            set
+            {
+                count = value;
+            }
+        }
+        public Course course;
         
         public Group (string name, int count, Course course){
             this.name = name;
             this.count = count;
             this.course = course;
-        }
-        public Group (string name, int count, string courseName, double payment, int cuont){
-            this.name = name;
-            this.count = count;
-            course = new Course (courseName, payment, count);
         }
         public string ShowInfo() 
         {
@@ -86,23 +111,17 @@ public class Program
             }
         }
         public Web (string name, double payment, string type, Module[] moduls) : base (name, payment, moduls) => this.type = type;
-        public Web (string name, double payment, string type, int count) : base (name, payment, count)
-        {
-            this.type = type;
-        }
             
     }
     public class Game : Course 
     {
         private string engine;
-        public string Engine
-        {   
+        public string Engine{
             get
             {
                 return engine;    
-            } 
-            set
-            {
+            }
+            set{
                 if ((value == "unity") || (value == "unreal"))
                 {
                     engine = value;
@@ -112,14 +131,13 @@ public class Program
                     Console.WriteLine ("Invalid input");    
                 }
             }
+            
         }
         public Game (string name, double payment, string engine, Module[] moduls) : base (name, payment, moduls) => this.engine = engine;
-        public Game (string name, double payment, string engine, int count) : base (name, payment, count) => this.engine = engine;
     }
     public class AI : Course 
     {
         public AI (string name, double payment, Module[] moduls) : base (name, payment, moduls){ }
-        public AI (string name, double payment, int count) : base (name, payment, count){ }
     }
     
     
@@ -142,7 +160,7 @@ public class Program
             {    
                 new Module("C# for Unity", 5), new Module("Physics in Games", 4) 
             }),
-            new Game("Game Dev Advanced", 42000, "Unreal", new Module[] 
+            new Game("Game Dev Advanced", 42000, "unreal", new Module[] 
             { 
                 new Module("Blueprints", 6), new Module("C++ for Unreal", 7) 
             }) 
@@ -156,9 +174,46 @@ public class Program
             new Group("Game Dev Group 1", 20, courses[3]),   // Unity Game Development
             new Group("Game Dev Group 2", 18, courses[4])     // Unreal Game Development
         }; 
+// 1. գտնել վեբ սովորող ուսանողների քանակը (ենթադրվում է, որ կարող են լինել տարբեր վեբի խմբեր)
+
+// 2. գտնել որքան գումար կկուտակվի մեկ ամսում Unreal engine-ի շրջանակներում Game Dev սովորող ուսանողների վճարած գումարից
+
+// 3. գտնել ամենապահանջված դասընթացը (ուսանողների քանակով)
+
+        int countOfWebStudents = 0;
+        int countOfAIStudents = 0;
+        int countOfGameStudents = 0;
         for (int i = 0; i < groups.Length; i++) 
         {
-            Console.WriteLine (groups[i].ShowInfo());
+            if (groups[i].course is Web){
+                countOfWebStudents += groups[i].Count;
+            }
+            if (groups[i].course is AI){
+                countOfAIStudents += groups[i].Count;
+            }
+            if (groups[i].course is Game){
+                countOfGameStudents += groups[i].Count;
+            }
         } 
-    }
+        Console.WriteLine ($"The WEB learning students' count is {countOfWebStudents}");
+
+        double payment = 1;
+        for (int i = 0; i < groups.Length; i++) 
+        {
+            if (groups[i].course is Game other){
+                if (other.Engine == "unreal"){
+                    Console.WriteLine("Sd");
+                    payment += groups[i].course.Payment * groups[i].Count;
+                }
+            }
+        } 
+        Console.WriteLine($"The unreal engine Game students payment is {payment}");
+
+        if ((countOfWebStudents > countOfAIStudents) && (countOfWebStudents > countOfGameStudents))
+            Console.WriteLine ("The most wanted course is WEB");
+        else if ((countOfAIStudents > countOfWebStudents) && (countOfAIStudents > countOfGameStudents))
+            Console.WriteLine ("The most wanted course is AI");
+        else if ((countOfGameStudents > countOfWebStudents) && (countOfGameStudents > countOfAIStudents))
+            Console.WriteLine ("The most wanted course is Game");
+        }
 }
