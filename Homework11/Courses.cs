@@ -13,27 +13,60 @@
 using System;
 public class Program 
 {
+    public class Module 
+    {
+        private string title {get; set;}
+        private int timeInMinutes {get; set;}
+        public Module (string title, int time)
+        {
+            this.title = title;
+            timeInMinutes = time;
+        }
+    }
     public class Course 
     {
-        private string name {get; set;}
-        private double psyment {get; set;}
-        private Module[] moduls;
+        protected string name {get; set;}
+        protected double payment {get; set;}
+        protected Module[] moduls;
+
+        public Course (string name, double payment, Module[] moduls)
+        {
+            this.name = name;
+            this.payment = payment;
+            this.moduls = moduls;
+        }
+        public Course (string name, double payment, int size){
+            this.name = name;
+            this.payment = payment;
+            moduls = new Module[size];
+        }
     }
     public class Group 
     {
         private string name {get; set;}
         private int count {get; set;}
         private Course course;
-    }
-    public class Module 
-    {
-        private string title {get; set;}
-        private int timeInMinutes {get; set;}
+        
+        public Group (string name, int count, Course course){
+            this.name = name;
+            this.count = count;
+            this.course = course;
+        }
+        public Group (string name, int count, string courseName, double payment, int cuont){
+            this.name = name;
+            this.count = count;
+            course = new Course (courseName, payment, count);
+        }
+        public string ShowInfo() 
+        {
+            return $"Group name is {name}, students count is {count}";
+        }
     }
     
-    public class Web : Course 
+    public class Web : Course   
     {
-        private string type 
+        private string type;
+        public string Type
         {
             get
             {
@@ -41,39 +74,52 @@ public class Program
             } 
             set
             {
-                if ((value == "frontend") || (value == "backend") || (value == "backend"))
+                if ((value == "frontend") || (value == "backend") || (value == "fullstack"))
                 {
                     type = value;
                 } 
                 else 
                 {
-                    Console.WriteLine ("Invalid input");    
+                    Console.WriteLine ("Invalid input"); 
+                    return;   
                 }
-            }}
+            }
+        }
+        public Web (string name, double payment, string type, Module[] moduls) : base (name, payment, moduls) => this.type = type;
+        public Web (string name, double payment, string type, int count) : base (name, payment, count)
+        {
+            this.type = type;
+        }
+            
     }
     public class Game : Course 
     {
-        private string engine
+        private string engine;
+        public string Engine
         {   
             get
             {
-                return type;    
+                return engine;    
             } 
             set
             {
                 if ((value == "unity") || (value == "unreal"))
                 {
-                    type = value;
+                    engine = value;
                 } 
                 else 
                 {
                     Console.WriteLine ("Invalid input");    
                 }
-            }}
+            }
+        }
+        public Game (string name, double payment, string engine, Module[] moduls) : base (name, payment, moduls) => this.engine = engine;
+        public Game (string name, double payment, string engine, int count) : base (name, payment, count) => this.engine = engine;
     }
     public class AI : Course 
     {
-        
+        public AI (string name, double payment, Module[] moduls) : base (name, payment, moduls){ }
+        public AI (string name, double payment, int count) : base (name, payment, count){ }
     }
     
     
@@ -84,7 +130,7 @@ public class Program
             { 
                 new Module("HTML & CSS", 2), new Module("JavaScript", 3) 
             }),
-            new Web("Fullstack Development", 60000, "fullstack", new Module[] 
+                new Web("Fullstack Development", 60000, "fullstack", new Module[] 
             { 
                 new Module("Node.js", 4), new Module("React", 5) 
             }),
@@ -99,7 +145,7 @@ public class Program
             new Game("Game Dev Advanced", 42000, "Unreal", new Module[] 
             { 
                 new Module("Blueprints", 6), new Module("C++ for Unreal", 7) 
-            })
+            }) 
         };  
             
         Group[] groups = new Group[]
@@ -108,7 +154,11 @@ public class Program
             new Group("Fullstack Group 1", 12, courses[1]),  // Fullstack Development
             new Group("AI Group 1", 10, courses[2]),         // Machine Learning
             new Group("Game Dev Group 1", 20, courses[3]),   // Unity Game Development
-            new Group("Game Dev Group 2", 18, courses[4])    // Unreal Game Development
-        };   
+            new Group("Game Dev Group 2", 18, courses[4])     // Unreal Game Development
+        }; 
+        for (int i = 0; i < groups.Length; i++) 
+        {
+            Console.WriteLine (groups[i].ShowInfo());
+        } 
     }
 }
