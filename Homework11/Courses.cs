@@ -90,6 +90,7 @@ public class Program
     
     public class Web : Course   
     {
+        public static int Count = 0;
         private string type;
         public string Type
         {
@@ -110,11 +111,16 @@ public class Program
                 }
             }
         }
-        public Web (string name, double payment, string type, Module[] moduls) : base (name, payment, moduls) => this.type = type;
+        public Web (string name, double payment, string type, Module[] moduls) : base (name, payment, moduls)
+        {
+            this.type = type;
+            ++Count;
+        }
             
     }
     public class Game : Course 
     {
+        public static int Count = 0;
         private string engine;
         public string Engine{
             get
@@ -133,11 +139,19 @@ public class Program
             }
             
         }
-        public Game (string name, double payment, string engine, Module[] moduls) : base (name, payment, moduls) => this.engine = engine;
+        public Game (string name, double payment, string engine, Module[] moduls) : base (name, payment, moduls)
+        {
+            this.engine = engine;
+            ++Count;
+        }
     }
     public class AI : Course 
     {
-        public AI (string name, double payment, Module[] moduls) : base (name, payment, moduls){ }
+        public static int Count = 0;
+        public AI (string name, double payment, Module[] moduls) : base (name, payment, moduls)
+        { 
+            ++Count;
+        }
     }
     
     
@@ -180,40 +194,25 @@ public class Program
 
 // 3. գտնել ամենապահանջված դասընթացը (ուսանողների քանակով)
 
-        int countOfWebStudents = 0;
-        int countOfAIStudents = 0;
-        int countOfGameStudents = 0;
-        for (int i = 0; i < groups.Length; i++) 
-        {
-            if (groups[i].course is Web){
-                countOfWebStudents += groups[i].Count;
-            }
-            if (groups[i].course is AI){
-                countOfAIStudents += groups[i].Count;
-            }
-            if (groups[i].course is Game){
-                countOfGameStudents += groups[i].Count;
-            }
-        } 
-        Console.WriteLine ($"The WEB learning students' count is {countOfWebStudents}");
+        
+        Console.WriteLine ($"The WEB learning students' count is {Web.Count}");
 
         double payment = 1;
         for (int i = 0; i < groups.Length; i++) 
         {
             if (groups[i].course is Game other){
                 if (other.Engine == "unreal"){
-                    Console.WriteLine("Sd");
                     payment += groups[i].course.Payment * groups[i].Count;
                 }
             }
         } 
         Console.WriteLine($"The unreal engine Game students payment is {payment}");
 
-        if ((countOfWebStudents > countOfAIStudents) && (countOfWebStudents > countOfGameStudents))
+        if ((Web.Count > AI.Count) && (Web.Count > Game.Count))
             Console.WriteLine ("The most wanted course is WEB");
-        else if ((countOfAIStudents > countOfWebStudents) && (countOfAIStudents > countOfGameStudents))
+        else if ((AI.Count > Web.Count) && (AI.Count > Game.Count))
             Console.WriteLine ("The most wanted course is AI");
-        else if ((countOfGameStudents > countOfWebStudents) && (countOfGameStudents > countOfAIStudents))
+        else if ((Game.Count > Web.Count) && (Game.Count > AI.Count))
             Console.WriteLine ("The most wanted course is Game");
         }
 }
