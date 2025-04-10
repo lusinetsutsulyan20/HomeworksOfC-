@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections;
 using MyArray;
+using Person;
+namespace Program;
+
 public class Program
 {
     public static void Main()
