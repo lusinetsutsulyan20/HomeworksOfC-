@@ -1,6 +1,5 @@
 using System.Collections;
-using System.Globalization;
-using System.Reflection.Metadata.Ecma335;
+namespace Person;
 
 public class Person
 {
