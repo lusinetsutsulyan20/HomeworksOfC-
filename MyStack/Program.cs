@@ -1,5 +1,7 @@
 ﻿using System;
 using MyStack;
+namespace Program;
+
 public class Program
 {
     public static void Main()
