@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-namespace MyQueue;
+namespace MyQueue{
 
 public class MyQueue <T> : IEnumerable<T>
 {
@@ -23,7 +23,7 @@ public class MyQueue <T> : IEnumerable<T>
         ++Count;
     }
 
-     public void Resize()
+    public void Resize()
     {
         _capacity *= 2;
         T[] tmp = new T[_capacity];
@@ -67,4 +67,5 @@ public class MyQueue <T> : IEnumerable<T>
     {
         return (IEnumerator) GetEnumerator();
     }
+}
 }
