@@ -1,24 +1,27 @@
 using System;
 using System.Collections;
-// using System.Diagnostics.Metrics; 
-
-namespace MyArray;
+namespace MyArray{
 
 public class MyArrayList : ICloneable, IEnumerable
 {
     public int Count {get;set;}
     private int _capacity = 2;
 
-    private object[] _array = null;
+    private object[] _array = new object[2];
+
     public object this [int index]
     {
         get
         {
             if (index < 0 || index > _array.Length)
             {
-                throw new ArgumentOutOfRangeException(nameof(index));
+                throw new ArgumentOutOfRangeException(nameof(index));   
             }
             return _array[index];
+        }
+        set
+        {
+            Insert(index, value);
         }
     }
 
@@ -71,23 +74,23 @@ public class MyArrayList : ICloneable, IEnumerable
         {
             throw new ArgumentOutOfRangeException(nameof(index));
         }
-        for (int i = index; i < (_array.Length - 1); i++)
+        for (int i = index; i < Count - 1; i++)
         {
             _array[i] = _array[i + 1];
         }
-        _array[Count - 1] = default;
         --Count;
+        _array[Count] = default;
     }
 
 
     public void Remove(object item)
     {
-        for (int i = 0; i < _array.Length; i++)
+        for (int i = 0; i < Count; i++)
         {
             if (object.Equals(_array[i], item))
             {
                 RemoveAt(i);
-                --Count;
+                --i;
             }
         } 
     }
@@ -113,7 +116,7 @@ public class MyArrayList : ICloneable, IEnumerable
             return;
         }
         
-        if (Count == _capacity)
+        if (Count == _capacity || index > Count)
         {
             Resize();
         }
@@ -125,15 +128,16 @@ public class MyArrayList : ICloneable, IEnumerable
         _array[index] = item;
         ++Count;
     }
-
     public int BinarySearch(Object obj, IComparer cmp)
     {
         int left = 0;
-        int right = _array.Length - 1;
+        int right = Count - 1;
 
-        while (left < right)
+        while (left <= right)
         {
-            int mid = (right - left) / 2;
+            // int mid = (right + left) / 2;
+            int mid = left + (right - left) / 2;
+
             int comparison = cmp.Compare(_array[mid], obj);
 
             if (comparison == 0)
@@ -142,21 +146,22 @@ public class MyArrayList : ICloneable, IEnumerable
             } 
             else if (comparison < 0) // 1 < 2
             {
-                left = mid;
+                left = mid + 1;
             } 
             else
             {
-                right = mid;
+                right = mid - 1;
             }
         }
-        return 0;
+        return -1;
     }
 
     public void Print()
     {
-        for (int i = 0; i < _array.Length; i++)
+        for (int i = 0; i < Count; i++)
         {
             Console.WriteLine (_array[i].ToString());
         }
     }
+}
 }
