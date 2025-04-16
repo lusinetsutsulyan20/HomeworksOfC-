@@ -1,7 +1,5 @@
-
-using System;
 using System.Collections;
-namespace MyStack;
+namespace MyStack{
 public class MyStack<T> : IEnumerable<T>
 {
     T[] _array;
@@ -43,9 +41,16 @@ public class MyStack<T> : IEnumerable<T>
 
     public string Peek()
     {
-        return _array[Count - 1].ToString();
+        return  _array[Count - 1] != null ? _array[Count - 1].ToString() : "null";
     }
 
+    public void Print()
+    {
+        for(int i = 0; i < Count; i++)
+        {
+            Console.WriteLine(_array[i].ToString());
+        }
+    }
     public IEnumerator<T> GetEnumerator()
     {
         for (int i = 0; i < Count; i++)
@@ -58,4 +63,5 @@ public class MyStack<T> : IEnumerable<T>
     {
         return (IEnumerator)  GetEnumerator();
     }
+}
 }
