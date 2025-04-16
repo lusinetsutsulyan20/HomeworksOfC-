@@ -1,21 +1,22 @@
-﻿using System;
+using System;
 using System.Runtime.CompilerServices;
 using MyQueue;
+using People;
+namespace Prog{
 
 public class Program
 {
     public static void Main()
     {
-         Queue<int> numbers = new Queue<int>();
+        Queue<Person> people = new Queue<Person>();
 
-        // adds 65 and 17 to the queue
-        numbers.Enqueue(65);
-        numbers.Enqueue(17);
-
-        // print elements of the queue 
-        foreach (int item in numbers)
+        people.Enqueue(new Person("aa", 11));
+        people.Enqueue(new Person("bb", 22));
+        people.Dequeue();
+        foreach (var item in people)
         {
             Console.WriteLine(item);
         }
     }
+}
 }
