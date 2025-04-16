@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Globalization;
 using System.Reflection.Metadata.Ecma335;
-
-public class Person
+namespace People{
+public class Person 
 {
     public string Name {get; private set;}
     public int Age {get; private set;}
@@ -23,6 +23,10 @@ public class CompareByAge : IComparer
     {
         Person person1 = obj1 as Person;
         Person person2 = obj2 as Person;
+        if (person1 == null || person2 == null)
+        {
+            throw new ArgumentException("Both arguments must be of type Person.");
+        }
         if (person1.Age == person2.Age) 
             return 0;
         else if (person1.Age > person2.Age)
@@ -31,3 +35,4 @@ public class CompareByAge : IComparer
             return 1;
     }
 }
+}   
