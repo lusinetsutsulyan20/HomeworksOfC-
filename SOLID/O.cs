@@ -21,19 +21,26 @@
 
 public interface IShape 
 {
-    double AreaCalculator();
+    double Area();
 }
 public class Circle : IShape
 {
-    public double AreaCalculator()
+    public double Area()
     {
         return 3.14 * 5 * 5; // Hardcoded radius
     }
 }
 public class Square : IShape
 {
-    public double AreaCalculator()
+    public double Area()
     {
         return 5 * 5; // Hardcoded side 
     }   
+}
+public class AreaCalculator
+{
+    public double CalculateArea(IShape shape)
+    {
+        return shape.Area();
+    }
 }
