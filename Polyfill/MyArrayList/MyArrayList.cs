@@ -13,7 +13,7 @@ public class MyArrayList : ICloneable, IEnumerable
     {
         get
         {
-            if (index < 0 || index > _array.Length)
+            if (index < 0 || index > Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));   
             }
@@ -35,7 +35,7 @@ public class MyArrayList : ICloneable, IEnumerable
 
     public IEnumerator GetEnumerator()
     {
-        for (int i = 0; i < _array.Length; i++)
+        for (int i = 0; i < Count; i++)
         {
             yield return _array[i];
         }
@@ -60,7 +60,7 @@ public class MyArrayList : ICloneable, IEnumerable
     {
         _capacity *= 2;
         object[] tmp = new object[_capacity];
-        for (int i = 0; i < _array.Length; i++)
+        for (int i = 0; i < Count; i++)
         {
             tmp[i] = _array[i];
         }
